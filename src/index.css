@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: #ffffffab;
+  /* background-color: #16acd2; */
+
+}
+
+
+code,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+label,
+a,
+p {
+  font-family: 'Poppins', sans-serif;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+
+input:-webkit-autofill {
+  box-shadow: 0 0 0px 1000px transparent inset !important;
+  -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+  -webkit-text-fill-color: inherit !important;
+  transition: background-color 9999s ease-in-out 0s !important;
+}

@@ -1,0 +1,326 @@
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
+
+export const useProfileStore = create(
+  persist(
+    (set, get) => ({
+      // Profile Data
+      firstName: '',
+      lastName: '',
+      dateOfBirth: '', // Stored as YYYY-MM-DD for date input compatibility
+      gender: '',
+      medicalRecords: [],
+      address: '',
+      profilePic: '',
+      nationality: '',
+      country: '',
+      language: '',
+      email: '',
+      height: 0.0,
+      weight: 0.0,
+      bmi: 0.0,
+      heartRate: 0,
+      bloodPressure: '',
+      phone: '',
+      password: '', // Note: Storing password in client-side state is generally not recommended for production apps.
+      confirmPassword: '', // This is for client-side validation.
+      is2FaEnabled: false,
+      allergies: '',
+      chronicCondition: '',
+      medication: '',
+      primaryCare: '',
+      medicalRecordFileName: '', // To store the name of the uploaded file
+      isInsuredByUhuruMed: false,
+      policyNo: '',
+      planName: '',
+      idCardFileName: '',
+      emergencyContactFullName: '',
+      emergencyContactRelationship: '',
+      emergencyContactPhone: '',
+      acceptTerms: false,
+      consentTelemedicine: false,
+      dataProtectionAcknowledgment: false,
+      submitTerms: false,
+      submitTelemedicine: false,
+      submitDataProtectionAcknowledgment: false,
+
+      // Last saved state for discard functionality - ensure it's always an object
+      lastSavedState: {
+        firstName: '',
+        lastName: '',
+        dateOfBirth: '',
+        gender: '',
+        height: 0.0,
+        weight: 0.0,
+        bmi: 0.0,
+        heartRate: 0,
+        bloodPressure: '',
+        profilePic: '',
+        address: '',
+        nationality: '',
+        medicalRecords: [],
+        country: '',
+        language: '',
+        email: '',
+        phone: '',
+        password: '',
+        confirmPassword: '',
+        enabled2FA: false,
+        allergies: '',
+        chronicCondition: '',
+        medication: '',
+        primaryCare: '',
+        medicalRecordFileName: '',
+        isInsuredByUhuruMed: false,
+        policyNo: '',
+        planName: '',
+        idCardFileName: '',
+        emergencyContactFullName: '',
+        emergencyContactRelationship: '',
+        emergencyContactPhone: '',
+        acceptTerms: false,
+        consentTelemedicine: false,
+        dataProtectionAcknowledgment: false,
+        submitTerms: false,
+        submitTelemedicine: false,
+        submitDataProtectionAcknowledgment: false,
+      },
+
+      // Setters for individual fields
+      setFirstName: (firstName) => set({ firstName }),
+      setLastName: (lastName) => set({ lastName }),
+      setDateOfBirth: (dateOfBirth) => set({ dateOfBirth }),
+      setGender: (gender) => set({ gender }),
+      setAddress: (address) => set({ address }),
+      setNationality: (nationality) => set({ nationality }),
+      setCountry: (country) => set({ country }),
+      setMedicalRecords: (medicalRecords) => set({ medicalRecords }),
+      setLanguage: (language) => set({ language }),
+      setProfilePic: (profilePic) => set({ profilePic }),
+      setHeight: (height) => set({ height }),
+      setWeight: (weight) => set({ weight }),
+      setHeartRate: (heartRate) => set({ heartRate }),
+      setBloodPressure: (bloodPressure) => set({ bloodPressure }),
+      setBmi: (bmi) => set({ bmi }),
+
+      setEmail: (email) => set({ email }),
+      setPhone: (phone) => set({ phone }),
+      setPassword: (password) => set({ password }),
+      setConfirmPassword: (confirmPassword) => set({ confirmPassword }),
+      setIs2FaEnabled: (is2FaEnabled) => set({ is2FaEnabled }),
+
+      setAllergies: (allergies) => set({ allergies }),
+      setChronicCondition: (chronicCondition) => set({ chronicCondition }),
+      setMedication: (medication) => set({ medication }),
+      setPrimaryCare: (primaryCare) => set({ primaryCare }),
+      setMedicalRecordFileName: (medicalRecordFileName) => set({ medicalRecordFileName }),
+
+      setIsInsuredByUhuruMed: (isInsuredByUhuruMed) => set({ isInsuredByUhuruMed }),
+      setPolicyNo: (policyNo) => set({ policyNo }),
+      setPlanName: (planName) => set({ planName }),
+      setIdCardFileName: (idCardFileName) => set({ idCardFileName }),
+
+      setEmergencyContactFullName: (emergencyContactFullName) => set({ emergencyContactFullName }),
+      setEmergencyContactRelationship: (emergencyContactRelationship) => set({ emergencyContactRelationship }),
+      setEmergencyContactPhone: (emergencyContactPhone) => set({ emergencyContactPhone }),
+
+      setAcceptTerms: (acceptTerms) => set({ acceptTerms }),
+      setConsentTelemedicine: (consentTelemedicine) => set({ consentTelemedicine }),
+      setDataProtectionAcknowledgment: (dataProtectionAcknowledgment) => set({ dataProtectionAcknowledgment }),
+      setSubmitTerms: (submitTerms) => set({ submitTerms }),
+      setSubmitTelemedicine: (submitTelemedicine) => set({ submitTelemedicine }),
+      setSubmitDataProtectionAcknowledgment: (submitDataProtectionAcknowledgment) =>
+        set({ submitDataProtectionAcknowledgment }),
+
+      // Function to set multiple fields at once (useful for pre-filling)
+      setProfileData: (data) => set((state) => ({ ...state, ...data })),
+
+      // Function to save all profile data and update lastSavedState
+      saveAllProfileData: () => {
+        const currentState = get();
+        const dataToSave = {
+          firstName: currentState.firstName,
+          lastName: currentState.lastName,
+          dateOfBirth: currentState.dateOfBirth,
+          profilePic: currentState.profilePic,
+          gender: currentState.gender,
+          height: currentState.height,
+          weight: currentState.weight,
+          heartRate: currentState.heartRate,
+          bmi: currentState.bmi,
+          bloodPressure: currentState.bloodPressure,
+          address: currentState.address,
+          nationality: currentState.nationality,
+          country: currentState.country,
+          language: currentState.language,
+          email: currentState.email,
+          phone: currentState.phone,
+          password: currentState.password,
+          confirmPassword: currentState.confirmPassword,
+          enabled2FA: currentState.enabled2FA,
+          allergies: currentState.allergies,
+          chronicCondition: currentState.chronicCondition,
+          medication: currentState.medication,
+          primaryCare: currentState.primaryCare,
+          medicalRecordFileName: currentState.medicalRecordFileName,
+          isInsuredByUhuruMed: currentState.isInsuredByUhuruMed,
+          policyNo: currentState.policyNo,
+          planName: currentState.planName,
+          idCardFileName: currentState.idCardFileName,
+          emergencyContactFullName: currentState.emergencyContactFullName,
+          emergencyContactRelationship: currentState.emergencyContactRelationship,
+          emergencyContactPhone: currentState.emergencyContactPhone,
+          acceptTerms: currentState.acceptTerms,
+          consentTelemedicine: currentState.consentTelemedicine,
+          dataProtectionAcknowledgment: currentState.dataProtectionAcknowledgment,
+          submitTerms: currentState.submitTerms,
+          submitTelemedicine: currentState.submitTelemedicine,
+          submitDataProtectionAcknowledgment: currentState.submitDataProtectionAcknowledgment,
+        };
+        set({ lastSavedState: dataToSave });
+        console.log('Saving all profile data to store (and localStorage):', dataToSave);
+        // In a real app, you would send dataToSave to a backend API here
+      },
+
+      // Function to discard changes and revert to lastSavedState
+      discardChanges: () => {
+        const lastSaved = get().lastSavedState;
+        set({
+          firstName: lastSaved.firstName,
+          lastName: lastSaved.lastName,
+          dateOfBirth: lastSaved.dateOfBirth,
+          gender: lastSaved.gender,
+          profilePic: lastSaved.profilePic,
+          address: lastSaved.address,
+          nationality: lastSaved.nationality,
+          height: lastSaved.height,
+          weight: lastSaved.weight,
+          heartRate: lastSaved.heartRate,
+          bmi: lastSaved.bmi,
+          bloodPressure: lastSaved.bloodPressure,
+          country: lastSaved.country,
+          language: lastSaved.language,
+          email: lastSaved.email,
+          phone: lastSaved.phone,
+          password: lastSaved.password,
+          confirmPassword: lastSaved.confirmPassword,
+          enabled2FA: lastSaved.enabled2FA,
+          allergies: lastSaved.allergies,
+          chronicCondition: lastSaved.chronicCondition,
+          medication: lastSaved.medication,
+          primaryCare: lastSaved.primaryCare,
+          medicalRecordFileName: lastSaved.medicalRecordFileName,
+          isInsuredByUhuruMed: lastSaved.isInsuredByUhuruMed,
+          policyNo: lastSaved.policyNo,
+          planName: lastSaved.planName,
+          idCardFileName: lastSaved.idCardFileName,
+          emergencyContactFullName: lastSaved.emergencyContactFullName,
+          emergencyContactRelationship: lastSaved.emergencyContactRelationship,
+          emergencyContactPhone: lastSaved.emergencyContactPhone,
+          acceptTerms: lastSaved.acceptTerms,
+          consentTelemedicine: lastSaved.consentTelemedicine,
+          dataProtectionAcknowledgment: lastSaved.dataProtectionAcknowledgment,
+          submitTerms: lastSaved.submitTerms,
+          submitTelemedicine: lastSaved.submitTelemedicine,
+          submitDataProtectionAcknowledgment: lastSaved.submitDataProtectionAcknowledgment,
+        });
+        console.log('Discarding changes, reverting to last saved state.');
+      },
+    }),
+    {
+      name: 'profile-storage', // unique name for localStorage key
+      getStorage: () => localStorage, // specify localStorage as the storage medium
+      // Only persist the actual profile data, not the setters or functions
+      partialize: (state) =>
+        Object.fromEntries(
+          Object.entries(state).filter(
+            ([key]) =>
+              ![
+                'setFirstName',
+                'setLastName',
+                'setDateOfBirth',
+                'setGender',
+                'profilePic',
+                'setAddress',
+                'setNationality',
+                'setCountry',
+                'setLanguage',
+                'setEmail',
+                'setPhone',
+                'setPassword',
+                'setConfirmPassword',
+                'setIs2FaEnabled',
+                'setAllergies',
+                'setChronicCondition',
+                'setMedication',
+                'setPrimaryCare',
+                'setMedicalRecordFileName',
+                'setIsInsuredByUhuruMed',
+                'setPolicyNo',
+                'setPlanName',
+                'setIdCardFileName',
+                'setEmergencyContactFullName',
+                'setEmergencyContactRelationship',
+                'setEmergencyContactPhone',
+                'setAcceptTerms',
+                'setConsentTelemedicine',
+                'setDataProtectionAcknowledgment',
+                'setSubmitTerms',
+                'setSubmitTelemedicine',
+                'setSubmitDataProtectionAcknowledgment',
+                'setProfileData',
+                'saveAllProfileData',
+                'discardChanges',
+              ].includes(key),
+          ),
+        ),
+      // This callback runs after rehydration. It ensures lastSavedState is populated.
+      onRehydrateStorage: (state) => {
+        return (rehydratedState) => {
+          // If lastSavedState is not present or empty after rehydration, initialize it
+          if (!rehydratedState.lastSavedState || Object.keys(rehydratedState.lastSavedState).length === 0) {
+            const profileDataKeys = [
+              'firstName',
+              'lastName',
+              'dateOfBirth',
+              'gender',
+              'address',
+              'profilePic',
+              'nationality',
+              'country',
+              'language',
+              'email',
+              'phone',
+              'password',
+              'confirmPassword',
+              'enabled2FA',
+              'allergies',
+              'chronicCondition',
+              'medication',
+              'primaryCare',
+              'medicalRecordFileName',
+              'isInsuredByUhuruMed',
+              'policyNo',
+              'planName',
+              'idCardFileName',
+              'emergencyContactFullName',
+              'emergencyContactRelationship',
+              'emergencyContactPhone',
+              'acceptTerms',
+              'consentTelemedicine',
+              'dataProtectionAcknowledgment',
+              'submitTerms',
+              'submitTelemedicine',
+              'submitDataProtectionAcknowledgment',
+            ];
+            const initialLastSavedState = {};
+            profileDataKeys.forEach((key) => {
+              initialLastSavedState[key] = rehydratedState[key];
+            });
+            rehydratedState.lastSavedState = initialLastSavedState;
+          }
+        };
+      },
+    },
+  ),
+);
